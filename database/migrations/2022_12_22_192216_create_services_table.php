@@ -15,9 +15,15 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('direction_id');
             $table->string('libelle')->nullable()->default(null);
             $table->string('commentaire')->nullable()->default(null);
             $table->boolean('deleted')->default(0);
+
+            $table->foreign('direction_id', 'FK_Direction')
+                    ->references('id')->on('directions')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
             $table->timestamps();
         });
     }

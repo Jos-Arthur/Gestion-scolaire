@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePersonnesTable extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,19 @@ class CreatePersonnesTable extends Migration
      */
     public function up()
     {
-        Schema::create('personnes', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('profil_id');
             $table->unsignedBigInteger('service_id');
-            $table->unsignedBigInteger('localite_id');
+            $table->unsignedBigInteger('localite_id');              
             $table->string('nom')->nullable()->default(null);
             $table->string('prenom')->nullable()->default(null);
             $table->string('matricule')->nullable()->default(null);
             $table->string('telephone')->nullable()->default(null);
             $table->string('nip')->nullable()->default(null);
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');          
             $table->boolean('deleted')->default(0);
 
             $table->foreign('profil_id', 'FK_appartient')
@@ -39,6 +42,7 @@ class CreatePersonnesTable extends Migration
                 ->references('id')->on('localites')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -50,6 +54,6 @@ class CreatePersonnesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personnes');
+        Schema::dropIfExists('users');
     }
 }
