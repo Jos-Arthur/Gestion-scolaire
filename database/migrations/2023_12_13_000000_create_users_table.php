@@ -15,11 +15,12 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('profil_id');
-            $table->unsignedBigInteger('service_id');
-            $table->unsignedBigInteger('localite_id');              
+            $table->unsignedBigInteger('profil_id')->nullable()->default(null);
+            $table->unsignedBigInteger('service_id')->nullable()->default(null);
+            $table->unsignedBigInteger('localite_id')->nullable()->default(null);              
             $table->string('nom')->nullable()->default(null);
             $table->string('prenom')->nullable()->default(null);
+            $table->string('username')->nullable()->default(null);
             $table->string('matricule')->nullable()->default(null);
             $table->string('telephone')->nullable()->default(null);
             $table->string('nip')->nullable()->default(null);
