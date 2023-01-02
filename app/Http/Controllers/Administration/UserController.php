@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Profil;
 
 class UserController extends Controller
 {
@@ -52,7 +53,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('backend.pages.users.create');
+        $profils = Profil::where('deleted', 1)->get();
+        return view('backend.pages.users.create', compact('profils'));
     }
 
     /**

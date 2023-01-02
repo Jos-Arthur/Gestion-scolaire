@@ -30,7 +30,7 @@ class ProfilController extends Controller
                         
                 ->addColumn('action',function($row){
                     $btn = '<a href="'.route('profils.edit',$row->id).'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
-                                <a href="#" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
+                                <a href="'.route('profils.destroy',$row->id).'" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['deleted','action'])
@@ -80,7 +80,8 @@ class ProfilController extends Controller
      */
     public function show($id)
     {
-        //
+        // $profils = Profil::findOrFail($id);
+        // return view('backend.pages.profils.show',compact('profils'));
     }
 
     /**
@@ -91,7 +92,8 @@ class ProfilController extends Controller
      */
     public function edit($id)
     {
-        //
+        $profils = Profil::findOrFail($id);
+        return view('backend.pages.profils.edit',compact('profils'));
     }
 
     /**
@@ -103,7 +105,18 @@ class ProfilController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $libelle = $request->get('libelle');
+        $commentaire = $request->get('commentaire');
+
+        $news_data = [
+            'libelle'=>$libelle,
+            'commentaire'=>$commentaire
+        ];
+
+        $profils = Profil::find($id);
+        $profils->update($news_data);
+
+        return redirect()->route('profils.index')->with('success','Modification reussie');
     }
 
     /**
@@ -114,6 +127,11 @@ class ProfilController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $profil = Profil::find($id);
+        $profil->deleted = true;
+
+        $profil->update();
+
+        return redirect()->route('profils.index')->with('success','Suppressions reussie');
     }
 }
