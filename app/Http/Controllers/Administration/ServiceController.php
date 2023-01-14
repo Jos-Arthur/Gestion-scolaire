@@ -17,7 +17,7 @@ class ServiceController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = Service::where('deleted',1)->get();
+            $data = Service::where('deleted','=',false)->get();
 
             return datatables()->of($data) 
                  ->addColumn('deleted',function($row){

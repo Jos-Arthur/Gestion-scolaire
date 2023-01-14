@@ -16,7 +16,7 @@ class DirectionController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = Direction::where('deleted',1)->get();
+            $data = Direction::where('deleted','=',false)->get();
 
             return datatables()->of($data) 
                  ->addColumn('deleted',function($row){

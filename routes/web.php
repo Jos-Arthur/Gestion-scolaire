@@ -69,3 +69,9 @@ Route::get('/regions/destroy/{id}',[RegionController::class, 'destroy'])->name('
  */
 Route::resource('localites', LocaliteController::class);
 Route::get('/localites/destroy/{id}',[LocaliteController::class, 'destroy'])->name('localites.delete');
+
+Route::resource('directions', DirectionController::class);
+Route::get('/directions/destroy/{id}',[DirectionController::class, 'destroy'])->name('directions.delete');
+
+Route::resource('services', ServiceController::class);
+Route::get('/services/destroy/{id}',[DirectionController::class, 'destroy'])->name('services.delete');
