@@ -59,13 +59,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('profils', ProfilController::class);
 Route::get('/profils/destroy/{id}',[ProfilController::class, 'destroy'])->name('profils.delete');
 
-<<<<<<< HEAD
-Route::resource('profils', ProfilController::class);
-
-Route::resource('directions', DirectionController::class);
-
-Route::resource('services', ServiceController::class);
-=======
 /**
  * Regions routes
  */
@@ -76,4 +69,3 @@ Route::get('/regions/destroy/{id}',[RegionController::class, 'destroy'])->name('
  */
 Route::resource('localites', LocaliteController::class);
 Route::get('/localites/destroy/{id}',[LocaliteController::class, 'destroy'])->name('localites.delete');
->>>>>>> d32b184ab075b4aa5d943aab42e47ab24b790246
