@@ -21,7 +21,7 @@ class UserController extends Controller
         //$users = User::where('deleted',0)->get();
         
         if(request()->ajax()){
-            $data = User::where('deleted',0)->get();
+            $data = User::where('deleted','=',false)->get();
 
             return datatables()->of($data) 
                  ->addColumn('deleted',function($row){

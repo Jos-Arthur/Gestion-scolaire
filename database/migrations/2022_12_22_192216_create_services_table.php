@@ -18,7 +18,7 @@ class CreateServicesTable extends Migration
             $table->unsignedBigInteger('direction_id');
             $table->string('libelle')->nullable()->default(null);
             $table->string('commentaire')->nullable()->default(null);
-            $table->boolean('deleted')->default(0);
+            $table->boolean('deleted')->default(false);
 
             $table->foreign('direction_id', 'FK_Direction')
                     ->references('id')->on('directions')

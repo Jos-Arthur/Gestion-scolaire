@@ -26,15 +26,15 @@
 							<h4 class="text-section">Administration</h4>
 						</li>
 						<li class="nav-item">
-							<a href="{{route('directions.index')}}">
+							<a href="{{route('regions.index')}}">
 								<i class="fas fa-layer-group"></i>
-								<p>Directions</p>
+								<p>Regions</p>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="{{route('services.index')}}">
+							<a href="{{route('localites.index')}}">
 								<i class="fas fa-layer-group"></i>
-								<p>Services</p>
+								<p>Localites</p>
 							</a>
 						</li>
 						<li class="nav-item">

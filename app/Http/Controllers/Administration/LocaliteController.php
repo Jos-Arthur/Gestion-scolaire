@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Profil;
+use App\Models\Localite;
+use App\Models\Region;
 
-class ProfilController extends Controller
+class LocaliteController extends Controller
 {
-    /**
+   /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -16,7 +17,7 @@ class ProfilController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = Profil::where('deleted','=',false)->get();
+            $data = Localite::where('deleted','=',false)->get();
 
             return datatables()->of($data) 
                  ->addColumn('deleted',function($row){
@@ -26,18 +27,21 @@ class ProfilController extends Controller
                         else if($row->deleted == 1) {
                             return 'Non Actif';
                         }
+                    })
+                ->addColumn('region', function ($row) {
+                        return $row->region->libelle;
                     }) 
                         
                 ->addColumn('action',function($row){
-                    $btn = '<a href="'.route('profils.edit',$row->id).'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
-                                <a href="'.route('profils.delete',$row->id).'" class="edit btn btn-danger" method="post"><i class="fa fa-trash"></i></a>';
+                    $btn = '<a href="'.route('localites.edit',$row->id).'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
+                                <a href="'.route('localites.delete',$row->id).'" class="edit btn btn-danger" method="post"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['deleted','action'])
+                ->rawColumns(['deleted', 'region','action'])
                 ->make(true);
         }
 
-        return view('backend.pages.profils.index');
+        return view('backend.pages.localites.index');
     }
 
     /**
@@ -47,7 +51,8 @@ class ProfilController extends Controller
      */
     public function create()
     {
-        return view('backend.pages.profils.create');
+        $regions = Region::where('deleted','=',false)->get();
+        return view('backend.pages.localites.create', compact('regions'));
     }
 
     /**
@@ -59,17 +64,19 @@ class ProfilController extends Controller
     public function store(Request $request)
     {
         $libelle = $request->get('libelle');
-        $commentaire = $request->get('commentaire');
+        $superficie = $request->get('superficie');
+        $region = $request->get('region');
 
-        $profils = new Profil();
+        $localites = new Localite();
 
-        $profils->libelle = $libelle;
-        $profils->commentaire = $commentaire;
-        $profils->deleted = false;
+        $localites->libelle = $libelle;
+        $localites->superficie = $superficie;
+        $localites->region_id = $region;
+        $localites->deleted = false;
 
-        $profils->save();
+        $localites->save();
 
-        return redirect()->route('profils.index')->with('creer','Profil créé');
+        return redirect()->route('localites.index')->with('creer','Localité créé');
     }
 
     /**
@@ -92,8 +99,9 @@ class ProfilController extends Controller
      */
     public function edit($id)
     {
-        $profils = Profil::findOrFail($id);
-        return view('backend.pages.profils.edit',compact('profils'));
+        $localites = Localite::findOrFail($id);
+        $regions = Region::where('deleted','=',false)->get();
+        return view('backend.pages.localites.edit',compact('localites', 'regions'));
     }
 
     /**
@@ -106,17 +114,19 @@ class ProfilController extends Controller
     public function update(Request $request, $id)
     {
         $libelle = $request->get('libelle');
-        $commentaire = $request->get('commentaire');
+        $superficie = $request->get('superficie');
+        $region = $request->get('region');
 
         $news_data = [
             'libelle'=>$libelle,
-            'commentaire'=>$commentaire
+            'superficie'=>$superficie,
+            'region_id'=>$region
         ];
 
-        $profils = Profil::find($id);
-        $profils->update($news_data);
+        $localites = Localite::find($id);
+        $localites->update($news_data);
 
-        return redirect()->route('profils.index')->with('success','Modification reussie');
+        return redirect()->route('localites.index')->with('success','Modification reussie');
     }
 
     /**
@@ -127,13 +137,13 @@ class ProfilController extends Controller
      */
     public function destroy($id)
     {
-        $profil = Profil::find($id);
-        $profil->deleted = true;
+        $localites = Localite::find($id);
+        $localites->deleted = true;
 
-        $profil->update();
+        $localites->update();
 
-        return redirect()->route('profils.index')
-                        ->with('success','Profil supprimé avec succès');
+        return redirect()->route('localites.index')
+                        ->with('success','localites supprimé avec succès');
 
         //return redirect()->route('')->with('success','Suppressions reussie');
     }

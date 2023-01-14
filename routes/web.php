@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Administration\ProfilController;
+use App\Http\Controllers\Administration\RegionController;
+use App\Http\Controllers\Administration\LocaliteController;
 use App\Http\Controllers\Administration\UserController;
 use App\Http\Controllers\Administration\DirectionController;
 use App\Http\Controllers\Administration\ServiceController;
@@ -51,9 +53,27 @@ Route::get('user/edit/{id}', [UserController::class, 'edit'])->name('users.edit'
 Route::post('user/update/{id}', [UserController::class, 'update'])->name('users.update');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard.home');
+/**
+ * Profil routes
+ */
+Route::resource('profils', ProfilController::class);
+Route::get('/profils/destroy/{id}',[ProfilController::class, 'destroy'])->name('profils.delete');
 
+<<<<<<< HEAD
 Route::resource('profils', ProfilController::class);
 
 Route::resource('directions', DirectionController::class);
 
 Route::resource('services', ServiceController::class);
+=======
+/**
+ * Regions routes
+ */
+Route::resource('regions', RegionController::class);
+Route::get('/regions/destroy/{id}',[RegionController::class, 'destroy'])->name('regions.delete');
+/**
+ * Localites routes
+ */
+Route::resource('localites', LocaliteController::class);
+Route::get('/localites/destroy/{id}',[LocaliteController::class, 'destroy'])->name('localites.delete');
+>>>>>>> d32b184ab075b4aa5d943aab42e47ab24b790246
