@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Administration\ProfilController;
 use App\Http\Controllers\Administration\UserController;
+use App\Http\Controllers\Administration\DirectionController;
+use App\Http\Controllers\Administration\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,10 +38,6 @@ Route::get('/inscription', function () {
     return view('backend.pages.register');
 })->name('users.register');
 
-
-
-
-
 Auth::routes();
 
 /**
@@ -55,3 +53,7 @@ Route::post('user/update/{id}', [UserController::class, 'update'])->name('users.
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard.home');
 
 Route::resource('profils', ProfilController::class);
+
+Route::resource('directions', DirectionController::class);
+
+Route::resource('services', ServiceController::class);

@@ -106,6 +106,7 @@
 
 <!-- Azzara DEMO methods, don't include it in your project! -->
 <script src="{{asset('admin/assets/js/setting-demo.js')}}"></script>
+<script src="{{asset('admin/assets/js/French.json')}}"></script>
 <script src="{{asset('admin/assets/js/demo.js')}}"></script>
     <script>
         function deconnexion(){

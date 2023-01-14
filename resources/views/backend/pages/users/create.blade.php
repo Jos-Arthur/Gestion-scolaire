@@ -69,10 +69,10 @@
                                     <div class="form-group form-show-validation row">
                                         <label for="email" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Profil <span class="required-label">*</span></label>
                                         <div class="col-lg-4 col-md-9 col-sm-8">
-                                            <select id="secteur" class="form-control dynamic" name="profil">
+                                            <select id="profil" class="form-control dynamic" name="profil">
                                                 <option>Profils</option>
                                                 @foreach($profils as $prof)
-                                                    <option value="{{$prof->id }}">{{ $prof->libelle }}</option>
+                                                    <option value="{{ $prof->id }}">{{ $prof->libelle }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

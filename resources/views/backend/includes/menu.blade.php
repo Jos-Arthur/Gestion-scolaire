@@ -26,6 +26,18 @@
 							<h4 class="text-section">Administration</h4>
 						</li>
 						<li class="nav-item">
+							<a href="{{route('directions.index')}}">
+								<i class="fas fa-layer-group"></i>
+								<p>Directions</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{route('services.index')}}">
+								<i class="fas fa-layer-group"></i>
+								<p>Services</p>
+							</a>
+						</li>
+						<li class="nav-item">
 							<a href="{{route('profils.index')}}">
 								<i class="fas fa-layer-group"></i>
 								<p>Profils</p>
