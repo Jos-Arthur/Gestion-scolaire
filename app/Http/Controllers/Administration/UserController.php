@@ -21,7 +21,7 @@ class UserController extends Controller
         //$users = User::where('deleted',0)->get();
         
         if(request()->ajax()){
-            $data = User::where('deleted',0)->get();
+            $data = User::where('deleted','=',false)->get();
 
             return datatables()->of($data) 
                  ->addColumn('deleted',function($row){
@@ -72,8 +72,9 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'same:confirm-password'
         ]);
-
+       // $profils= $request->get('profil');
         $input = $request->all();
+        //dd($profils);
         $input['password'] = Hash::make($input['password']);
         $user = User::create($input);
        

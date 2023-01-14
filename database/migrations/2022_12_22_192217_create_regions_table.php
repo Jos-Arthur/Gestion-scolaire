@@ -17,7 +17,7 @@ class CreateRegionsTable extends Migration
             $table->id();
             $table->string('libelle')->nullable()->default(null);
             $table->string('superficie')->nullable()->default(null);
-            $table->boolean('deleted')->default(0);
+            $table->boolean('deleted')->default(false);
             $table->timestamps();
         });
     }
