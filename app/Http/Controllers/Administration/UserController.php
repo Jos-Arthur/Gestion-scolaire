@@ -3,13 +3,28 @@
 namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Profil;
+use DB;
 
 class UserController extends Controller
 {
+    /**
+     * create a new instance of the class
+     *
+     * @return void
+     */
+    function __construct()
+    {
+         $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:user-create', ['only' => ['create','store']]);
+         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -54,7 +69,8 @@ class UserController extends Controller
     public function create()
     {
         $profils = Profil::where('deleted', 1)->get();
-        return view('backend.pages.users.create', compact('profils'));
+        $roles = Role::pluck('name','name')->all();
+        return view('backend.pages.users.create', compact('profils', 'roles'));
     }
 
     /**
@@ -71,12 +87,14 @@ class UserController extends Controller
             'username' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'same:confirm-password'
+            //'roles' => 'required'
         ]);
        // $profils= $request->get('profil');
         $input = $request->all();
         //dd($profils);
         $input['password'] = Hash::make($input['password']);
         $user = User::create($input);
+        $user->assignRole($request->input('roles'));
        
         
         return redirect()->route('users.get')->with('creer','Utilisateur créé');
@@ -97,11 +115,13 @@ class UserController extends Controller
             'username' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'same:confirm-password'
+            //'roles' => 'required'
         ]);
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         $user = User::create($input);
+        $user->assignRole($request->input('roles'));
        
         
         return view('backend.pages.login');
@@ -145,7 +165,15 @@ class UserController extends Controller
         $u = ['status'=>$statut];
 
         $user = User::find($id);
+        //$user->update($u);
         $user->update($u);
+
+        DB::table('model_has_roles')
+            ->where('model_id', $id)
+            ->delete();
+    
+        $user->assignRole($request->input('roles'));
+    
 
         return redirect()->route('users.get')->with('success','Modification reussie');
     }

@@ -42,6 +42,12 @@ Route::get('/inscription', function () {
 
 Auth::routes();
 
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('roles', RoleController::class);
+    Route::resource('permissions', PermissionController::class);
+});
+
+
 /**
  * All route for backend management.
  */
