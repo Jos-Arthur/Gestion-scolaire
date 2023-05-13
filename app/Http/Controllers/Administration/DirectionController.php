@@ -65,7 +65,7 @@ class DirectionController extends Controller
 
         $directions->libelle = $libelle;
         $directions->commentaire = $commentaire;
-        $directions->deleted = 1;
+        $directions->deleted = false;
 
         $directions->save();
 
@@ -114,7 +114,7 @@ class DirectionController extends Controller
             'commentaire'=>$commentaire
         ];
 
-        $directions = Direction::find($id);
+        $directions = Direction::findOrFail($id);
         $directions->update($news_data);
 
         return redirect()->route('directions.index')->with('success','Modification r&eacute;ussie');
