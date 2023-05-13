@@ -21,7 +21,7 @@ class RegionController extends Controller
             return datatables()->of($data) 
                  ->addColumn('deleted',function($row){
                         if($row->deleted == 0){
-                            return 'Actif';
+                            return 'Actifs';
                         }
                         else if($row->deleted == 1) {
                             return 'Non Actif';
