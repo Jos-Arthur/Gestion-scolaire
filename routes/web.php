@@ -8,6 +8,8 @@ use App\Http\Controllers\Administration\LocaliteController;
 use App\Http\Controllers\Administration\UserController;
 use App\Http\Controllers\Administration\DirectionController;
 use App\Http\Controllers\Administration\ServiceController;
+use App\Http\Controllers\Administration\ProvinceController;
+//use App\Http\Controllers\Administration\CommuneController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,12 +43,12 @@ Route::get('/inscription', function () {
 })->name('users.register');
 
 Auth::routes();
-
+/*
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
 });
-
+*/
 
 /**
  * All route for backend management.
@@ -70,14 +72,32 @@ Route::get('/profils/destroy/{id}',[ProfilController::class, 'destroy'])->name('
  */
 Route::resource('regions', RegionController::class);
 Route::get('/regions/destroy/{id}',[RegionController::class, 'destroy'])->name('regions.delete');
+
+/**
+ * Provinces routes
+ */
+Route::resource('provinces', ProvinceController::class);
+Route::get('provinces/edit/{id}', [ProvinceController::class, 'edit'])->name('provinces.edit');
+Route::get('/provinces/destroy/{id}',[ProvinceController::class, 'destroy'])->name('provinces.delete');
+
+/**
+ * Communes routes
+ */
+Route::resource('communes', CommuneController::class);
+Route::get('/communes/destroy/{id}',[CommuneController::class, 'destroy'])->name('communes.delete');
+
 /**
  * Localites routes
  */
 Route::resource('localites', LocaliteController::class);
+Route::patch('/localites/update/{id}',[
+    'uses' => 'LocaliteController@update'
+]);
+//Route::post('/localites/update/{id}',[LocaliteController::class, 'update'])->name('localites.update');
 Route::get('/localites/destroy/{id}',[LocaliteController::class, 'destroy'])->name('localites.delete');
 
 Route::resource('directions', DirectionController::class);
 Route::get('/directions/destroy/{id}',[DirectionController::class, 'destroy'])->name('directions.delete');
 
 Route::resource('services', ServiceController::class);
-Route::get('/services/destroy/{id}',[DirectionController::class, 'destroy'])->name('services.delete');
+Route::get('/services/destroy/{id}',[ServiceController::class, 'destroy'])->name('services.delete');

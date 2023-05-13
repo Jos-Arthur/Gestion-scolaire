@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Region;
+use App\Models\Direction;
+use App\Models\Service;
 
-class RegionController extends Controller
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class RegionController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = Region::where('deleted','=',false)->get();
+            $data = Service::where('deleted','=',false)->get();
 
             return datatables()->of($data) 
                  ->addColumn('deleted',function($row){
@@ -29,15 +30,15 @@ class RegionController extends Controller
                     }) 
                         
                 ->addColumn('action',function($row){
-                    $btn = '<a href="'.route('regions.edit',$row->id).'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
-                                <a href="'.route('regions.delete',$row->id).'" class="edit btn btn-danger" method="post"><i class="fa fa-trash"></i></a>';
+                    $btn = '<a href="'.route('services.edit',$row->id).'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
+                                <a href="#" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['deleted','action'])
                 ->make(true);
         }
 
-        return view('backend.pages.regions.index');
+        return view('backend.pages.services.index');
     }
 
     /**
@@ -47,7 +48,7 @@ class RegionController extends Controller
      */
     public function create()
     {
-        return view('backend.pages.regions.create');
+        return view('backend.pages.services.create');
     }
 
     /**
@@ -59,17 +60,17 @@ class RegionController extends Controller
     public function store(Request $request)
     {
         $libelle = $request->get('libelle');
-        $superficie = $request->get('superficie');
+        $commentaire = $request->get('commentaire');
 
-        $regions = new Region();
+        $services = new Service();
 
-        $regions->libelle = $libelle;
-        $regions->superficie = $superficie;
-        $regions->deleted = false;
+        $services->libelle = $libelle;
+        $services->commentaire = $commentaire;
+        $services->deleted = 1;
 
-        $regions->save();
+        $services->save();
 
-        return redirect()->route('regions.index')->with('creer','Localité créé');
+        return redirect()->route('services.index')->with('creer','Service créée');
     }
 
     /**
@@ -80,8 +81,7 @@ class RegionController extends Controller
      */
     public function show($id)
     {
-        // $profils = Profil::findOrFail($id);
-        // return view('backend.pages.profils.show',compact('profils'));
+        //
     }
 
     /**
@@ -92,8 +92,9 @@ class RegionController extends Controller
      */
     public function edit($id)
     {
-        $regions = Region::findOrFail($id);
-        return view('backend.pages.regions.edit',compact('regions'));
+        //
+        $services = Service::findOrFail($id);
+        return view('backend.pages.services.edit',compact('services'));
     }
 
     /**
@@ -105,20 +106,19 @@ class RegionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //
         $libelle = $request->get('libelle');
-        $superficie = $request->get('superficie');
-        //echo $superficie;die();
-        $regions = Region::find($id);
+        $commentaire = $request->get('commentaire');
+
         $news_data = [
             'libelle'=>$libelle,
-            'superficie'=>$superficie
+            'commentaire'=>$commentaire
         ];
 
-        //var_dump($news_data);die();
-        $regions->save($news_data);
-        var_dump($regions);die();
+        $services = Service::find($id);
+        $services->update($news_data);
 
-        return redirect()->route('regions.index')->with('success','Modification reussie');
+        return redirect()->route('services.index')->with('success','Modification r&eacute;ussie');
     }
 
     /**
@@ -129,14 +129,12 @@ class RegionController extends Controller
      */
     public function destroy($id)
     {
-        $regions = Region::find($id);
-        $regions->deleted = true;
+        //
+        $direction = Service::find($id);
+        $direction->deleted = true;
 
-        $regions->update();
+        $direction->update();
 
-        return redirect()->route('regions.index')
-                        ->with('success','regions supprimé avec succès');
-
-        //return redirect()->route('')->with('success','Suppressions reussie');
+        return redirect()->route('services.index')->with('success','Suppression r&eacute;ussie');
     }
 }

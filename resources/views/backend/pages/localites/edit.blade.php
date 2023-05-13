@@ -20,7 +20,7 @@
                             <i class="flaticon-right-arrow"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="#">Localité</a>
+                            <a href="#">Province</a>
                         </li>
                         <li class="separator">
                             <i class="flaticon-right-arrow"></i>
@@ -37,16 +37,17 @@
                                 <div class="card-title">Mise à jour</div>
                                 <div class="card-category">Modifier d'une localité</div>
                             </div>
-                            <form method="POST" action="{{route('localité.update',$localites->id)}}">
+                            <form method="POST" action="{{route('localites.update',$localites->id)}}">
                                 @csrf
                                 @method('PATCH')
                                 <div class="card-body">
                                     <div class="form-group form-show-validation row">
-                                        <label for="email" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Profil <span class="required-label">*</span></label>
+                                        <label for="email" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Région <span class="required-label">*</span></label>
                                         <div class="col-lg-4 col-md-9 col-sm-8">
                                             <select id="region" class="form-control dynamic" name="region">
-                                                <option>Région</option>
+                                                <option>Choisir une région</option>
                                                 @foreach($regions as $region)
+                                                <?php //var_dump($region);die();?>
                                                     <option value="{{ $region->id }}">{{ $region->libelle }}</option>
                                                 @endforeach
                                             </select>
@@ -55,25 +56,24 @@
                                     <div class="form-group form-show-validation row">
                                         <label for="libelle" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Libelle <span class="required-label">*</span></label>
                                         <div class="col-lg-4 col-md-9 col-sm-8">
-                                            <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libelle" value="{{$regions->libelle}}">
+                                            <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libelle" value="{{ $localites->libelle }}" required>
                                         </div>
                                     </div>
-
-                                    
-                                    <div class="form-group form-show-validation row">
+                                
+                                      <div class="form-group form-show-validation row">
                                         <label for="superficie" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Superficie <span class="required-label">*</span></label>
                                         <div class="col-lg-4 col-md-9 col-sm-8">
-                                             <textarea type="text" class="form-control" id="superficie" placeholder="superficie" rows="5"  name="superficie">{{$regions->superficie}}</textarea>
-
+                                            <textarea type="text" class="form-control"  id="superficie" name="superficie" rows="5" style="resize: none" required>
+                                            {{ $localites->superficie }}
+                                            </textarea>
                                         </div>
-                                    </div>
-
-                                    
+                                    </div>                                  
+                                  
 
                                     <div class="separator-solid"></div>
-
-                                  
+                                
                                 </div>
+
                                 <div class="card-action">
                                     <div class="row">
                                         <div class="col-md-12">

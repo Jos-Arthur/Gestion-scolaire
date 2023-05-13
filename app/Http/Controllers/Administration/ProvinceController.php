@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Localite;
 use App\Models\Region;
+use App\Models\Province;
 
-class LocaliteController extends Controller
+class ProvinceController extends Controller
 {
-   /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -17,7 +17,7 @@ class LocaliteController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = Localite::where('deleted','=',false)->get();
+            $data = Province::where('deleted','=',false)->get();
 
             return datatables()->of($data) 
                  ->addColumn('deleted',function($row){
@@ -33,15 +33,15 @@ class LocaliteController extends Controller
                     }) 
                         
                 ->addColumn('action',function($row){
-                    $btn = '<a href="'.route('localites.edit',$row->id).'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
-                                <a href="'.route('localites.delete',$row->id).'" class="edit btn btn-danger" method="post"><i class="fa fa-trash"></i></a>';
+                    $btn = '<a href="'.route('provinces.edit',$row->id).'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
+                                <a href="'.route('provinces.delete',$row->id).'" class="edit btn btn-danger" method="post"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['deleted', 'region','action'])
                 ->make(true);
         }
 
-        return view('backend.pages.localites.index');
+       return view('backend.pages.provinces.index');
     }
 
     /**
@@ -52,7 +52,7 @@ class LocaliteController extends Controller
     public function create()
     {
         $regions = Region::where('deleted','=',false)->get();
-        return view('backend.pages.localites.create', compact('regions'));
+        return view('backend.pages.provinces.create', compact('regions'));
     }
 
     /**
@@ -64,17 +64,21 @@ class LocaliteController extends Controller
     public function store(Request $request)
     {
         $libelle = $request->get('libelle');
+        $chef_lieu=$request->get('chef_lieu');
+        $commentaire = $request->get('commentaire');
         $region = $request->get('region');
 
-        $localites = new Localite();
+        $provinces = new Province();
 
-        $localites->libelle = $libelle;
-        $localites->region_id = $region;
-        $localites->deleted = false;
+        $provinces->libelle = $libelle;
+        $provinces->chef_lieu = $chef_lieu;
+        $provinces->commentaire = $commentaire;
+        $provinces->region_id = $region;
+        $provinces->deleted = false;
 
-        $localites->save();
+        $provinces->save();
 
-        return redirect()->route('localites.index')->with('creer','Localité créée');
+        return redirect()->route('provinces.index')->with('creer','Province créée');
     }
 
     /**
@@ -85,8 +89,7 @@ class LocaliteController extends Controller
      */
     public function show($id)
     {
-        // $profils = Profil::findOrFail($id);
-        // return view('backend.pages.profils.show',compact('profils'));
+        //
     }
 
     /**
@@ -97,9 +100,13 @@ class LocaliteController extends Controller
      */
     public function edit($id)
     {
-        $localites = Localite::findOrFail($id);
-        $regions = Region::where('deleted','=',false)->get();
-        return view('backend.pages.localites.edit',compact('localites', 'regions'));
+        //
+        $provinces = Province::findOrFail($id);
+        $regions = Province::findOrFail($provinces->region_id);
+        //$regions = Region::where('deleted','=',false)->get();
+        //dd($regions);
+        //dd($provinces);
+        return view('backend.pages.provinces.edit',compact('provinces', 'regions'));
     }
 
     /**
@@ -111,18 +118,21 @@ class LocaliteController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //
         $libelle = $request->get('libelle');
-        $region = $request->get('region');
+        $chef_lieu = $request->get('chef_lieu');
+        $commentaire = $request->get('commentaire');
 
         $news_data = [
             'libelle'=>$libelle,
-            'region_id'=>$region
+            'chef_lieu'=> $chef_lieu,
+            'commentaire'=>$commentaire
         ];
 
-        $localites = Localite::find($id);
-        $localites->update($news_data);
+        $provinces = Province::find($id);
+        $provinces->update($news_data);
 
-        return redirect()->route('localites.index')->with('success','Modification réussie');
+        return redirect()->route('provinces.index')->with('success','Modification r&eacute;ussie');
     }
 
     /**
@@ -133,14 +143,12 @@ class LocaliteController extends Controller
      */
     public function destroy($id)
     {
-        $localites = Localite::find($id);
-        $localites->deleted = true;
+        //
+        $provinces = Province::find($id);
+        $provinces->deleted = true;
 
-        $localites->update();
+        $provinces->update();
 
-        return redirect()->route('localites.index')
-                        ->with('success','localité supprimée avec succès');
-
-        //return redirect()->route('')->with('success','Suppressions reussie');
+        return redirect()->route('provinces.index')->with('success','Suppression r&eacute;ussie');
     }
 }

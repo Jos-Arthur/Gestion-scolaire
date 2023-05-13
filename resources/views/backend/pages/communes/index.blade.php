@@ -9,7 +9,7 @@
         <div class="content">
             <div class="page-inner">
                 <div class="page-header">
-                    <h4 class="page-title">Nos Régions</h4>
+                    <h4 class="page-title">Les Provinces</h4>
                     <ul class="breadcrumbs">
                         <li class="nav-home">
                             <a href="#">
@@ -26,7 +26,7 @@
                             <i class="flaticon-right-arrow"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="#">regions</a>
+                            <a href="#">Provinces</a>
                         </li>
                     </ul>
                 </div>
@@ -35,8 +35,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">Liste des regions</h4>                           
-                                        <a class="btn btn-primary btn-round ml-auto" href="{{route('regions.create')}}"><i class="fa fa-plus"></i> Ajouter</a>                                  
+                                    <h4 class="card-title">Liste des provinces</h4>                           
+                                        <a class="btn btn-primary btn-round ml-auto" href="{{route('provinces.create')}}"><i class="fa fa-plus"></i> Ajouter</a>                                  
                                 </div>
                             </div>
                             <div class="card-body">
@@ -45,8 +45,9 @@
                                         <thead>
                                         <tr>                                           
                                             <th>Libelle</th>
-                                            <th>Superficie</th>                                 
-                                            <th>Etat</th>             
+                                            <th>Chef lieu de province</th>                                 
+                                            <th>Region</th>             
+                                            <th>Etat</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -69,11 +70,12 @@
                 processing:true,
                 serverSide:true,
                 ajax: {
-                    url:"{{ route('regions.index')}}",
+                    url:"{{ route('provinces.index')}}",
                 },
                 columns:[
                     {data: 'libelle', name:'libelle'},                   
-                    {data: 'superficie', name:'superficie'},                   
+                    {data: 'cheflieuprovince', name:'superficie'},                   
+                    {data: 'region', name:'region'},                   
                     {data: 'deleted', name:'deleted'},                  
                     {data: 'action', name:'action', orderable:false, searchable: false}
                 ]

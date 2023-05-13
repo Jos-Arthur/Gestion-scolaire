@@ -42,10 +42,10 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group form-show-validation row">
-                                        <label for="email" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Profil <span class="required-label">*</span></label>
+                                        <label for="email" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Région<span class="required-label">*</span></label>
                                         <div class="col-lg-4 col-md-9 col-sm-8">
                                             <select id="region" class="form-control dynamic" name="region">
-                                                <option>Région</option>
+                                                <option>Choisir une région</option>
                                                 @foreach($regions as $region)
                                                     <option value="{{ $region->id }}">{{ $region->libelle }}</option>
                                                 @endforeach
@@ -58,19 +58,8 @@
                                         <div class="col-lg-4 col-md-9 col-sm-8">
                                             <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libelle" required>
                                         </div>
-                                    </div>
-                                
-                                      <div class="form-group form-show-validation row">
-                                        <label for="superficie" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Superficie <span class="required-label">*</span></label>
-                                        <div class="col-lg-4 col-md-9 col-sm-8">
-                                            <textarea type="text" class="form-control"  id="superficie" name="superficie" rows="5" style="resize: none" required>
-                                            </textarea>
-                                        </div>
-                                    </div>                                  
-                                  
-
-                                    <div class="separator-solid"></div>
-                                    
+                                    </div>                           
+                                   <div class="separator-solid"></div>
                                 </div>                                
                                     <div class="card-action">
                                         <div class="row">

@@ -35,16 +35,16 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="card-title">Mise à jour</div>
-                                <div class="card-category">Modifier d'une région</div>
+                                <div class="card-category">Modifier d'une provinces</div>
                             </div>
-                            <form method="POST" action="{{route('regions.update',$regions->id)}}">
+                            <form method="POST" action="{{route('provinces.update',$provinces->id)}}">
                                 @csrf
                                 @method('PATCH')
                                 <div class="card-body">
                                     <div class="form-group form-show-validation row">
                                         <label for="libelle" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Libelle <span class="required-label">*</span></label>
                                         <div class="col-lg-4 col-md-9 col-sm-8">
-                                            <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libelle" value="{{$regions->libelle}}">
+                                            <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libelle" >
                                         </div>
                                     </div>
 
@@ -52,7 +52,7 @@
                                     <div class="form-group form-show-validation row">
                                         <label for="superficie" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Superficie <span class="required-label">*</span></label>
                                         <div class="col-lg-4 col-md-9 col-sm-8">
-                                             <textarea type="text" class="form-control" id="superficie" placeholder="superficie" rows="5"  name="superficie">{{$regions->superficie}}</textarea>
+                                             <textarea type="text" class="form-control" id="superficie" placeholder="superficie" rows="5"  name="superficie"></textarea>
 
                                         </div>
                                     </div>

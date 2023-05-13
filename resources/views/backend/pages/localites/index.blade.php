@@ -45,7 +45,6 @@
                                         <thead>
                                         <tr>                                           
                                             <th>Libelle</th>
-                                            <th>Superficie</th> 
                                             <th>Region</th>                                                                            
                                             <th>Etat</th>             
                                             <th>Action</th>
@@ -74,7 +73,6 @@
                 },
                 columns:[                    
                     {data: 'libelle', name:'libelle'},                   
-                    {data: 'superficie', name:'superficie'},
                     {data: 'region', name:'region'},                   
                     {data: 'deleted', name:'deleted'},                  
                     {data: 'action', name:'action', orderable:false, searchable: false}

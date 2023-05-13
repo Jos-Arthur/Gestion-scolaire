@@ -32,6 +32,18 @@
 							</a>
 						</li>
 						<li class="nav-item">
+							<a href="{{route('provinces.index')}}">
+								<i class="fas fa-layer-group"></i>
+								<p>Provinces</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{route('communes.index')}}">
+								<i class="fas fa-layer-group"></i>
+								<p>Communes</p>
+							</a>
+						</li>
+						<li class="nav-item">
 							<a href="{{route('localites.index')}}">
 								<i class="fas fa-layer-group"></i>
 								<p>Localites</p>
